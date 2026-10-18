@@ -193,6 +193,44 @@
             collapseTipLabel: 'Close Index'
         });
         map.addControl(layerSwitcher);
-        </script>
+        <// Smart script to automatically detect your QGIS map variable and add the scale bar safely
+setTimeout(function() {
+    // 1. Try to discover the map object name dynamically (QGIS often uses 'map' or 'mymap')
+    var activeMapInstance = null;
+    
+    if (typeof map !== 'undefined') {
+        activeMapInstance = map;
+    } else if (typeof mymap !== 'undefined') {
+        activeMapInstance = mymap;
+    } else {
+        // Look inside global window parameters to find the Leaflet map automatically
+        for (var key in window) {
+            if (window[key] instanceof L.Map) {
+                activeMapInstance = window[key];
+                break;
+            }
+        }
+    }
+
+    // 2. Add the Scale Bar if the map object is found successfully
+    if (activeMapInstance) {
+        var mapScale = L.control.scale({
+            position: 'bottomleft',
+            metric: true,        // Displays standard Kilometers
+            imperial: false,     // Removes feet/miles
+            maxWidth: 150
+        });
+        
+        mapScale.addTo(activeMapInstance);
+        
+        // Ensure visual visibility over other background panels
+        var scaleContainer = mapScale.getContainer();
+        if (scaleContainer) {
+            scaleContainer.style.zIndex = "4000";
+        }
+    } else {
+        console.error("Leaflet map variable could not be automatically detected.");
+    }
+}, 800); // Wait 800ms to guarantee everything finishes loading first>
     </body>
 </html>
