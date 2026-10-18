@@ -10,7 +10,6 @@
         <link rel="stylesheet" href="resources/fontawesome-all.min.css">
         <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
         <link rel="stylesheet" href="./resources/qgis2web.css">
-        
         <style>
         html, body {
             width: 100%;
@@ -18,9 +17,8 @@
             padding: 0;
             margin: 0;
             overflow: hidden;
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: Arial, sans-serif;
         }
-
         #map {
             width: 100vw;
             height: 100vh;
@@ -39,20 +37,18 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.92);
-            padding: 10px 24px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
             border: 1px solid rgba(0,0,0,0.15);
             text-align: center;
         }
-
         .map-title-box h2 {
             margin: 0;
             font-size: 18px;
             color: #1a252f;
-            font-weight: 700;
-            letter-spacing: 0.8px;
+            font-weight: bold;
         }
 
         /* North Arrow Box Overlay */
@@ -61,8 +57,8 @@
             top: 15px;
             right: 65px;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.92);
-            padding: 6px 8px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 6px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             border: 1px solid rgba(0,0,0,0.15);
@@ -70,34 +66,28 @@
             flex-direction: column;
             align-items: center;
         }
-
         .north-arrow-box svg {
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
         }
-
         .north-arrow-box span {
             font-size: 10px;
-            font-weight: 800;
+            font-weight: bold;
             color: #2c3e50;
-            margin-top: 1px;
         }
 
-        /* Zoom Control Overlay */
+        /* Adjust Zoom Controls Position */
         .ol-zoom {
             top: 15px !important;
             left: 15px !important;
             z-index: 1000 !important;
         }
-
         .ol-zoom button {
             background-color: #2c3e50 !important;
             color: #ffffff !important;
-            border-radius: 4px !important;
-            font-weight: bold !important;
         }
 
-        /* Layer Switcher (Index) Styling */
+        /* Adjust Layer Switcher / Index Position */
         .layer-switcher {
             top: 15px !important;
             right: 15px !important;
@@ -121,7 +111,7 @@
             <span>N</span>
         </div>
 
-        <!-- Map Div -->
+        <!-- Map Container -->
         <div id="map">
             <div id="popup" class="ol-popup">
                 <a href="#" id="popup-closer" class="ol-popup-closer"></a>
@@ -135,66 +125,6 @@
         <script src="resources/ol-layerswitcher.js"></script>
         <script src="layers/karvir_clipclipped_2.js"></script>
         <script src="styles/karvir_clipclipped_2_style.js"></script>
-
-        <script>
-        var container = document.getElementById('popup');
-        var content = document.getElementById('popup-content');
-        var closer = document.getElementById('popup-closer');
-
-        closer.onclick = function() {
-            overlay.setPosition(undefined);
-            closer.blur();
-            return false;
-        };
-
-        var overlay = new ol.Overlay({
-            element: container,
-            autoPan: true,
-            autoPanAnimation: {
-                duration: 250
-            }
-        });
-
-        var map = new ol.Map({
-            target: 'map',
-            overlays: [overlay],
-            layers: [
-                new ol.layer.Tile({
-                    title: 'OSM Standard',
-                    type: 'base',
-                    visible: true,
-                    source: new ol.source.OSM()
-                })
-            ],
-            view: new ol.View({
-                center: ol.proj.fromLonLat([74.20, 16.65]),
-                zoom: 11
-            })
-        });
-
-        if (typeof json_karvir_clipclipped_2 !== 'undefined') {
-            var format_karvir_clipclipped_2 = new ol.format.GeoJSON();
-            var features_karvir_clipclipped_2 = format_karvir_clipclipped_2.readFeatures(json_karvir_clipclipped_2, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-            var jsonSource_karvir_clipclipped_2 = new ol.source.Vector({
-                features: features_karvir_clipclipped_2,
-            });
-            var layer_karvir_clipclipped_2 = new ol.layer.Vector({
-                declutter: true,
-                source: jsonSource_karvir_clipclipped_2,
-                style: style_karvir_clipclipped_2,
-                title: 'Karvir Taluka Boundary'
-            });
-            map.addLayer(layer_karvir_clipclipped_2);
-            map.getView().fit(jsonSource_karvir_clipclipped_2.getExtent(), {duration: 1000});
-        }
-
-        var layerSwitcher = new ol.control.LayerSwitcher({
-            activationMode: 'click',
-            startActive: true,
-            tipLabel: 'Layers',
-            collapseTipLabel: 'Collapse layers'
-        });
-        map.addControl(layerSwitcher);
-        </script>
+        <script src="./resources/qgis2web.js"></script>
     </body>
 </html>
