@@ -24,6 +24,55 @@
         .ol-control > * {
             background-color: #f8f8f8!important;
             color: #444444!important;
+            /* Title Box Styling */
+#map-title {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+#map-title h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+/* North Arrow Styling */
+#north-arrow {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+#north-arrow img {
+    width: 35px;
+    height: 35px;
+    display: block;
+}
+
+/* Zoom Controls Fix */
+.ol-zoom {
+    top: 20px !important;
+    left: 20px !important;
+}
+.ol-zoom button {
+    background-color: #2c3e50 !important;
+    color: #fff !important;
+    font-weight: bold !important;
+    border-radius: 4px !important;
+}
             border-radius: 0px;
         }
         .ol-attribution a, .gcd-gl-input::placeholder, .search-layer-input-search::placeholder {
@@ -56,6 +105,15 @@
     </head>
     <body>
         <div id="map">
+            <!-- Title -->
+<div id="map-title">
+    <h2>Karvir Taluka Map</h2>
+</div>
+
+<!-- North Arrow Image -->
+<div id="north-arrow">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Compass_rose_brown.png" alt="North Arrow">
+</div>
             <div id="popup" class="ol-popup">
                 <a href="#" id="popup-closer" class="ol-popup-closer"></a>
                 <div id="popup-content"></div>
