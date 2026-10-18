@@ -8,127 +8,123 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="stylesheet" href="./resources/ol.css">
         <link rel="stylesheet" href="resources/fontawesome-all.min.css">
-        <link href="resources/photon-geocoder-autocomplete.min.css" rel="stylesheet">
         <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
         <link rel="stylesheet" href="./resources/qgis2web.css">
+        
         <style>
         html, body {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-}
-            background-color: #ffffff;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
-        .ol-control > * {
-            background-color: #f8f8f8!important;
-            color: #444444!important;
-            /* Title Box Styling */
-#map-title {
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 10px 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    border: 1px solid #ccc;
-    font-family: Arial, sans-serif;
-    text-align: center;
-}
-#map-title h2 {
-    margin: 0;
-    font-size: 18px;
-    color: #333;
-}
 
-/* North Arrow Styling */
-#north-arrow {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 8px;
-    border-radius: 50%;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-#north-arrow img {
-    width: 35px;
-    height: 35px;
-    display: block;
-}
-
-/* Zoom Controls Fix */
-.ol-zoom {
-    top: 20px !important;
-    left: 20px !important;
-}
-.ol-zoom button {
-    background-color: #2c3e50 !important;
-    color: #fff !important;
-    font-weight: bold !important;
-    border-radius: 4px !important;
-}
-            border-radius: 0px;
-        }
-        .ol-attribution a, .gcd-gl-input::placeholder, .search-layer-input-search::placeholder {
-            color: #444444!important;
-        }
-        .search-layer-input-search {
-            background-color: #f8f8f8!important;
-        }
-        .ol-control > *:focus, .ol-control >*:hover {
-            background-color: rgba(248, 248, 248, 0.7)!important;
-        } 
-        .ol-control {
-            background-color: rgba(255,255,255,.4) !important;
-            padding: 2px !important;
-        } 
-        </style>
-
-        <style>
         #map {
-    width: 100vw;
-    height: 100vh;
-    padding: 0;
-    margin: 0;
-}
-            width: 932px;
-            height: 665px;
+            width: 100vw;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* Dashboard Header Title Overlay */
+        .map-title-box {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 10px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            border: 1px solid rgba(0,0,0,0.15);
+            text-align: center;
+            pointer-events: auto;
+        }
+
+        .map-title-box h2 {
+            margin: 0;
+            font-size: 18px;
+            color: #1a252f;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+        }
+
+        /* SVG Vector North Arrow Box */
+        .north-arrow-box {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 8px 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border: 1px solid rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: auto;
+        }
+
+        .north-arrow-box svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .north-arrow-box span {
+            font-size: 11px;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-top: 2px;
+        }
+
+        /* Clean Zoom Controls */
+        .ol-zoom {
+            top: 15px !important;
+            left: 15px !important;
+            z-index: 1000 !important;
+        }
+
+        .ol-zoom button {
+            background-color: #2c3e50 !important;
+            color: #ffffff !important;
+            border-radius: 4px !important;
+            font-weight: bold !important;
         }
         </style>
-        <title></title>
+        <title>Karvir Taluka Map</title>
     </head>
     <body>
-        <div id="map">
-            <!-- Title -->
-<div id="map-title">
-    <h2>Karvir Taluka Map</h2>
-</div>
-
-<!-- North Arrow Image -->
-<div id="north-arrow">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Compass_rose_brown.png" alt="North Arrow">
-</div>
-            <div id="popup" class="ol-popup">
-                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-                <div id="popup-content"></div>
-            </div>
+        <!-- Floating Dashboard Title -->
+        <div class="map-title-box">
+            <h2>KARVIR TALUKA MAP</h2>
         </div>
+
+        <!-- Floating SVG Vector North Arrow -->
+        <div class="north-arrow-box">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="50,5 20,90 50,70" fill="#2c3e50"/>
+                <polygon points="50,5 80,90 50,70" fill="#e74c3c"/>
+            </svg>
+            <span>N</span>
+        </div>
+
+        <!-- Main Map Container -->
+        <div id="map"></div>
+
         <script src="resources/qgis2web_expressions.js"></script>
-        <script src="./resources/functions.js"></script>
-        <script src="./resources/ol.js"></script>
-        <script src="./resources/ol-layerswitcher.js"></script>
-        <script src="resources/photon-geocoder-autocomplete.min.js"></script>
-        <script src="resources/olms.js"></script>
-        <script src="layers/karvir_clipclipped_2.js"></script><script src="layers/building_3.js"></script><script src="layers/contour_4.js"></script><script src="layers/landuse_5.js"></script><script src="layers/Railway_6.js"></script><script src="layers/roads_7.js"></script><script src="layers/water_8.js"></script>
-        <script src="styles/karvir_clipclipped_2_style.js"></script><script src="styles/building_3_style.js"></script><script src="styles/contour_4_style.js"></script><script src="styles/landuse_5_style.js"></script><script src="styles/Railway_6_style.js"></script><script src="styles/roads_7_style.js"></script><script src="styles/water_8_style.js"></script>
-        <script src="./layers/layers.js" type="text/javascript"></script> 
-        <script src="./resources/Autolinker.min.js"></script>
+        <script src="resources/polyglot.min.js"></script>
+        <script src="resources/ol.js"></script>
+        <script src="resources/ol-layerswitcher.js"></script>
+        <script src="layers/karvir_clipclipped_2.js"></script>
+        <script src="styles/karvir_clipclipped_2_style.js"></script>
         <script src="./resources/qgis2web.js"></script>
     </body>
 </html>
